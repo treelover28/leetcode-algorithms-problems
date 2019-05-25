@@ -1,0 +1,68 @@
+class Solution 
+{
+    public List<List<Integer>> threeSum(int[] nums) 
+    {
+        List<List<Integer>> temp = new ArrayList<>();
+        
+        if (nums.length >= 3)
+        {
+            Arrays.sort(nums);
+            for (int i = 0; i < nums.length - 2; i++) 
+            {
+                for (int j = nums.length -1; j > i; j--) // finds second number backward
+                {
+                    if (nums[j] >=0)
+                    {
+                        int firstTwo = nums[i] + nums[j];
+                        int c = 0 - firstTwo;
+                        
+                        int last = j ;
+                        int first = i;
+                        while (first < last)
+                        {
+                            int mid = (last + first) / 2;
+                            if (nums[mid] == c &&
+                                i!=j &&
+                                j!=mid &&
+                                i!= mid)
+                            {
+
+                                temp.add(Arrays.asList(nums[i], nums[j], nums[mid]));
+                                break;
+                            }
+
+                            else if(nums[mid] == nums[i] &&
+                                    nums[j] == nums[mid] &&
+                                    nums[i] == nums[j])
+                            {
+                                break;
+                            }
+  
+                            else if (nums[mid] > c)
+                            {
+                                last = mid;
+                            }
+                            else
+                            {
+                                first = mid + 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        List<List<Integer>> solutions = new ArrayList<>();
+       
+        for (List<Integer> resultSet: temp)
+        {
+            if (!solutions.contains(resultSet))
+            {
+                solutions.add(resultSet);
+            }
+        }
+        return solutions; 
+        // return temp;
+    }
+}
+      

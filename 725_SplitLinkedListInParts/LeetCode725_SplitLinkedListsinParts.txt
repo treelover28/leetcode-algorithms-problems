@@ -1,0 +1,47 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution 
+{
+    public ListNode[] splitListToParts(ListNode root, int k) 
+    {
+        ListNode[] output = new ListNode[k];
+        ListNode temp = root;
+        int size = 0;
+        while (temp!= null)
+        {
+            size++;
+            temp = temp.next; // to get length of linked list
+        }
+        temp = root; // reset position
+        
+        int width = size/k;
+        int remainder = size % k;
+        for (int i = 0; i < k && temp != null; i++) 
+            // we can add k consecutive list as long as temp exist
+        {
+            output[i] = temp;
+            
+            // find the end of current bucket
+            for (int j = 0; j < width + (remainder > 0 ? 1 : 0) - 1; j++)
+            // if we have remainding parts, we loop with the full width.
+            // Else, we loop one less.
+            {
+                temp = temp.next;
+            }
+            
+            // cut current bucket and move on to fill next bucket
+            ListNode cutPoint = temp.next;
+            temp.next = null;
+            temp = cutPoint;
+            
+            remainder--;
+        }
+        return output;
+    }
+}
