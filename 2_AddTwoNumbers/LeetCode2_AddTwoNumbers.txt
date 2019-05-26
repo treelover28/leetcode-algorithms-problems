@@ -1,0 +1,67 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+import java.math.BigInteger;
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) 
+    {
+        StringBuilder s1 = new StringBuilder();
+        StringBuilder s2 = new StringBuilder();
+        
+        ArrayList<Integer> a = new ArrayList<>();
+        ArrayList<Integer> b = new ArrayList<>();
+        
+        // add all numbers to arrayList in reverse order
+        for (ListNode temp = l1; temp != null; temp = temp.next)
+        {
+            a.add(temp.val);
+        }
+        for (ListNode temp = l2; temp != null; temp = temp.next)
+        {
+            b.add(temp.val);
+        }
+        
+        // reverse arrayList 
+        Collections.reverse(a);
+        Collections.reverse(b);
+
+        // Convert the numbers into StringBuilder
+        for (int num : a)
+        {
+            s1.append(num);
+        }
+        for (int num : b)
+        {
+            s2.append(num);
+        }
+        
+        // parse String into Integer and add
+        BigInteger num1 = new BigInteger(s1.toString());
+        BigInteger num2 = new BigInteger(s2.toString());
+        BigInteger result = num1.add(num2);
+        String resultString = result.toString();
+        
+        // add invididual digit to arrayList
+        ArrayList<Integer> c = new ArrayList<>();
+        for (int i = 0 ; i < resultString.length(); i++)
+        {
+            int digit = Integer.parseInt(resultString.substring(i,i+1));
+            c.add(digit);
+        }
+        Collections.reverse(c);
+        ListNode res = new ListNode(c.get(0));
+        ListNode temp = res;
+        
+        for (int i = 1; i < c.size(); i++)
+        {
+            temp.next = new ListNode(c.get(i));
+            temp = temp.next;    
+        }
+        return res;
+    }
+}
