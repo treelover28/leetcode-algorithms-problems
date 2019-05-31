@@ -21,3 +21,6 @@ nums2 = [3, 4]
 
 The median is (2 + 3)/2 = 2.5
 ```
+## Result
+
+I'm not sure my time complexity analysis is right. It is simply too easy/simple for a "Hard" leetcode question.
