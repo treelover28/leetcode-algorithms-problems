@@ -1,0 +1,32 @@
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) 
+    {
+	// Brute force attempt
+	
+        int m = nums1.length;
+        int n = nums2.length;
+        int[] together = new int[m+n];
+        for (int i = 0; i < m; i++)  //O(m) run time depends on m
+        {
+            together[i] = nums1[i];
+        }
+        for (int i = 0; i < n; i++) //O(n) run time depends on n
+        {
+            together[m+i] = nums2[i];
+        }
+
+	// Assume Arrays.sort() run in log(k) where k = m+n
+	// this step takes O(log(m+n)) running time.
+	// Correct me if the time complexity is wrong
+        Arrays.sort(together); 
+        int k = together.length; // k = m +n
+        if (k % 2 != 0)
+        {
+            return (double) together[k/2];
+        }
+        else
+        {
+            return ((double)(together[(k/2) - 1] + together[(k/2)])/2);
+        }
+    }
+}
