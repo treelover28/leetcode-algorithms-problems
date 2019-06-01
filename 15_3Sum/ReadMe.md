@@ -17,3 +17,8 @@ A solution set is:
   [-1, -1, 2]
 ]
 ```
+## Result
+Solution beats:
+* 80.85% of all Java submission running-speed wise
+* 99.93% of all Java submission memory-usage wise
+* O(n<sup>2</sup>)
