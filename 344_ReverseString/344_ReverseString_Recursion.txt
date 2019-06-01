@@ -1,0 +1,19 @@
+class Solution {
+    public void reverseString(char[] s) 
+    {
+        reverseStringHelper(0, s);
+        
+    }
+    
+    private void reverseStringHelper(int index, char[] s)
+    {
+        if (index >= s.length/2|| index < 0 || s == null || s.length == 0)
+        {
+            return;
+        }
+        char temp = s[index];
+        s[index] = s[s.length -1 - index];
+        s[s.length -1- index] = temp;
+        reverseStringHelper(index + 1, s);
+    }
+}
