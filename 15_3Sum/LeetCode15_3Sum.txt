@@ -1,68 +1,47 @@
-class Solution 
+class Solution {
+public List<List<Integer>> threeSum(int[] nums) 
 {
-    public List<List<Integer>> threeSum(int[] nums) 
+    List<List<Integer>> res = new ArrayList<>();
+    Arrays.sort(nums);
+    for (int i = 0; i + 2 < nums.length; i++) 
     {
-        List<List<Integer>> temp = new ArrayList<>();
+        if (i > 0 && nums[i] == nums[i - 1]) 
+        {              
+            // skip same result
+            continue;
+        }
+        int j = i + 1; // next number
+        int k = nums.length - 1; // start from last number 
         
-        if (nums.length >= 3)
+        int target = -nums[i];
+        while (j < k) 
         {
-            Arrays.sort(nums);
-            for (int i = 0; i < nums.length - 2; i++) 
+            if (nums[j] + nums[k] == target) // if j + k = -i
             {
-                for (int j = nums.length -1; j > i; j--) // finds second number backward
-                {
-                    if (nums[j] >=0)
-                    {
-                        int firstTwo = nums[i] + nums[j];
-                        int c = 0 - firstTwo;
-                        
-                        int last = j ;
-                        int first = i;
-                        while (first < last)
-                        {
-                            int mid = (last + first) / 2;
-                            if (nums[mid] == c &&
-                                i!=j &&
-                                j!=mid &&
-                                i!= mid)
-                            {
-
-                                temp.add(Arrays.asList(nums[i], nums[j], nums[mid]));
-                                break;
-                            }
-
-                            else if(nums[mid] == nums[i] &&
-                                    nums[j] == nums[mid] &&
-                                    nums[i] == nums[j])
-                            {
-                                break;
-                            }
-  
-                            else if (nums[mid] > c)
-                            {
-                                last = mid;
-                            }
-                            else
-                            {
-                                first = mid + 1;
-                            }
-                        }
-                    }
+                res.add(Arrays.asList(nums[i], nums[j], nums[k]));
+                j++;
+                k--;
+                while (j < k && nums[j] == nums[j - 1]) 
+                {   
+                    j++;  // skip same result
                 }
-            }
-        }
-        
-        List<List<Integer>> solutions = new ArrayList<>();
-       
-        for (List<Integer> resultSet: temp)
-        {
-            if (!solutions.contains(resultSet))
+                
+                while (j < k && nums[k] == nums[k + 1])
+                {
+                    k--;  // skip same result
+                }
+                
+            } 
+            else if (nums[j] + nums[k] > target) 
             {
-                solutions.add(resultSet);
+                k--;
+            } 
+            else 
+            {
+                j++;
             }
         }
-        return solutions; 
-        // return temp;
     }
+    return res;
+  }
 }
-      
