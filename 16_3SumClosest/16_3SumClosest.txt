@@ -1,0 +1,44 @@
+class Solution 
+{
+    public int threeSumClosest(int[] nums, int target)
+    {
+        Arrays.sort(nums); // sort array first
+        int n = nums.length;
+        
+        int closest = nums[0] + nums[1] + nums[n-1]; // initialize closest to first sum
+        int initialDistance = Math.abs(target - closest); 
+        // Crucial that we use the absolute value for distance comparison
+        
+        for (int i = 0; i < n - 2; i++)
+        {
+            int start = i+1;
+            int end = n-1;
+            while (start < end)
+            {
+                int sum = nums[i]  + nums[start] + nums[end];
+                int distance = Math.abs(target - sum);
+                if (distance < initialDistance) 
+                {
+                    // compare current distance to closest distance so far.
+                    // if current distance is shorter, make it the new benchmark for compare
+                    // make closest value so far the sum
+                    initialDistance = distance;
+                    closest = sum;
+                }
+                if (sum < target)
+                {
+                    start++;
+                }
+                if (sum > target)
+                {
+                    end--;
+                }
+                if (sum == target && i!= start && i!= end && start != end)
+                {
+                    return sum; // if sum perfectly matches target and no same number is used
+                }
+            }
+        }
+        return closest;  
+    }
+}
