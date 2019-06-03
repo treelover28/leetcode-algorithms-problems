@@ -1,0 +1,55 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public void flatten(TreeNode root) 
+    {
+       ArrayList<TreeNode> snap = new ArrayList<>();
+        // fill up array
+        snapshot(root, snap);
+        
+        int snapSize = snap.size();
+        if (snapSize == 0 || snapSize == 1)
+        {
+            return;
+        }
+        // keep only root of old tree
+        root.left = null;
+        root.right = null;
+        TreeNode temp = root;
+        
+        for (int i = 0; i < snapSize; i++)
+        {
+            // traverse down and keep adding value to right subtree, while nulling all left subtrees.
+            temp.right = snap.get(i);
+            temp.left = null;
+            temp = temp.right;
+        }
+    }
+    
+    private void snapshot(TreeNode root, ArrayList<TreeNode> snap)
+    {
+        if (root== null)
+        {
+            return;
+        }
+        snap.add(root);
+        if (root.left != null)
+        {
+            snapshot(root.left, snap);
+        }
+        
+        if (root.right != null)
+        {
+            snapshot(root.right, snap);
+        }
+        
+        return;
+    }
+}
