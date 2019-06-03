@@ -1,0 +1,16 @@
+public class Solution {
+    public ListNode swapPairs(ListNode head) 
+    {
+        if ((head == null)||(head.next == null))
+        {
+            return head;
+        } 
+        ListNode temp = head.next; // second node in group of 2 
+        // recursive make head.next to point to the already reversed first node of next sequence of 2
+        head.next = swapPairs(head.next.next);
+        temp.next = head; // let temp which is holding the original second to connect the first node
+        // first node (head) is second node
+        // while previously second node temp becomes first node
+        return temp; // return new first node in reversed sequences to be pointed by previous sequence head.next;
+    }
+}
