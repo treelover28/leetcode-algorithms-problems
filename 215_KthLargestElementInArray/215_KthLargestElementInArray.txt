@@ -1,0 +1,28 @@
+class Solution {
+    public int findKthLargest(int[] nums, int k) 
+    {
+        Arrays.sort(nums); // sort the array in ascending order
+        int n = nums.length;
+        int result;
+        if (n > 1) 
+        {
+            result = nums[n-k]; 
+            if (k==n)
+            {
+		// if k equals n, just return first element (smallest)
+                return nums[0];
+            }
+            else if (k==1)
+            {
+		// if k equals 1, return last element (largest)
+                return nums[n-1];
+            }
+        }
+        else
+        {
+	    // if array only has one value, just return that value
+            result = nums[0];
+        }
+        return result;
+    }
+}
