@@ -23,4 +23,4 @@ Output:
 My solutions beats:
 * 100.00% all Java submissions running-time wise.
 * 98.73% all Java submissions memory-usage wise.
-* O(n)
+* __O(n)__
