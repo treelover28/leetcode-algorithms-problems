@@ -8,10 +8,10 @@ class Solution
         }
         
         int n= A.length;
-        boolean increase = (A[n-1]-A[0]) > 0; // check trend by taking last value take away first value
+        boolean currentTrend = (A[n-1]-A[0]) > 0; // check trend by taking last value take away first value
         for (int i=0; i<n-1; i++)
         {
-            if (A[i+1]!=A[i] && (A[i+1]-A[i]>0)!=increase) 
+            if (A[i+1]!=A[i] && (A[i+1]-A[i]>0)!=currentTrend) 
             {
                 // only check neighbours that are different
                 // if the trend is broken, return false
