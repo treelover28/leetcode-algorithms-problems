@@ -1,0 +1,60 @@
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node prev;
+    public Node next;
+    public Node child;
+
+    public Node() {}
+
+    public Node(int _val,Node _prev,Node _next,Node _child) {
+        val = _val;
+        prev = _prev;
+        next = _next;
+        child = _child;
+    }
+};
+*/
+class Solution {
+    public Node flatten(Node head) 
+    {    
+        if (head == null)
+        {
+            return head;
+        }
+        
+        Node temp = head;
+        while (temp != null)
+        {
+            if (temp.child == null)
+            {
+                temp = temp.next; // keep moving if temp doesn't have children
+                continue; 
+                // continue jumps right back to the conditional statement, repeat the process until child node is found
+            }
+            else // if child is found
+            {
+                Node c = temp.child;
+                while(c.next != null)
+                {
+                    c = c.next; // traverse through all siblings
+                }
+                // once out of this while statement, child now holds the tail.
+                c.next = temp.next; // connect tail of lower level to the next element after temp!
+                if (temp.next != null)
+                {
+                    temp.next.prev = c; 
+                    // connect prev of next element back the tail of lower level if next element exists
+                }
+                
+                // connect temp to its child nodes
+                temp.next = temp.child;
+                temp.child.prev = temp;
+                // nullify the child node ==> delete the lower level
+                temp.child = null;
+            }
+        }
+        return head;
+    }
+}
