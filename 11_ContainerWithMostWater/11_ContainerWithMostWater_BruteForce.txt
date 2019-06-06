@@ -1,0 +1,28 @@
+class Solution {
+    public int maxArea(int[] height) 
+    {
+        int n = height.length;
+        if (n > 1)
+        {
+            int largestArea = Math.min(height[0], height[1]) * (1-0); // initialize with first area
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int j = i+1; j < n; j++)
+                {
+                    int area = Math.min(A[i], A[j]) * (j-i); 
+                    // automatically select height by Math.min()
+                    // width is the distance between the two bars' indices
+                    if (area > largestArea)
+                    {
+                        largestArea = area;
+                    }
+                }
+            }
+            return largestArea;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+}
