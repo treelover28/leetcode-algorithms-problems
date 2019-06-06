@@ -16,7 +16,14 @@ Input: [1,8,6,2,5,4,8,3,7]
 Output: 49
 ```
 ## My Result
-My brute-force solution beats:
+My **brute-force** solution beats:
 * 25.0% all Java submissions running-time wise.
 * 99.93% all Java submissions memory-usage wise.
 * __O(n<sup>2</sup>)__
+* Test all combinations of bars and return largest Area.
+
+My **revised** solution beats:
+* 95.89% of all Java submissions running-time wise.
+* 97.53% of all Java submissions memory-usage wise.
+* __O(n)__ Huge improvement!! 
+* Tries to find the highest left bar first, and iterate through the right bar inward. Test only the max cases and return largest area.
