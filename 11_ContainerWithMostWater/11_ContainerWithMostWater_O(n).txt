@@ -1,0 +1,36 @@
+class Solution {
+    public int maxArea(int[] height) 
+    {
+        int n = height.length;
+        if (n > 1)
+        {
+            int l = 0;
+            int r = n -1;
+            // Scan the array from two ends inward
+            int largestArea = Math.min(height[l], height[r]) * (r - l); // initialize largestArea with area of current two bars
+            while (l < r) // exit when two indices meet, this mean it has finish scanning all the max cases
+            {
+                int area = Math.min(height[l], height[r]) * (r - l);
+                if (area > largestArea)
+                {
+                    largestArea = area; // update largestArea to largest area found so far
+                }
+                if (height[l] < height[r]) // only moves l if current left bar is shorter than right bar
+                {
+                    l++; // after a while, it will find the max left bar
+                }
+                else
+                {
+                    r--; 
+                    // once max left bar has been found, it keeps moving right bar to left
+                    // testing and checking those areas.
+                }
+            }
+            return largestArea;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+}
