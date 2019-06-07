@@ -1,0 +1,43 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution 
+{
+    // global variable
+    int sum = 0;
+    public int rangeSumBST(TreeNode root, int L, int R) 
+    {
+        if (root!= null)
+        {
+            if (root.val >= L && root.val <= R)
+            {
+                sum += root.val; // if val is in range, add to sum
+            }
+            if (root.left != null && root.val >= L) 
+                // if current node's val >= L and has left subtree.
+                // because if current node's val < L, it means all values in left subtree would be < L also
+                // no need to traverse left subtree in that case
+            {
+                rangeSumBST(root.left, L, R);
+            }
+            if (root.right != null && root.val <= R)
+            {
+                // if current node's val > R, all values in right subtree would be > R also.
+                // no need to traverse if you already know they are out of range.
+                // save times
+                rangeSumBST(root.right, L, R);
+            }
+            return sum;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+}
