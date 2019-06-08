@@ -1,0 +1,48 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution 
+{
+    public int pathSum(TreeNode root, int sum) 
+    {
+        Map<Integer, Integer> preSumMap = new HashMap<>();
+        // because the presum is always 0 in the beginning
+        // add to preSumMap
+        preSumMap.put(0,1);
+        return pathSumHelper(root, 0, sum, preSumMap);
+    }
+    
+    private int pathSumHelper(TreeNode root, int preSum, int target, Map<Integer,Integer> preSumMap)
+    {
+        if (root == null)
+        {
+            return 0;
+        }
+
+        // add current root's value to preSum
+        preSum += root.val; 
+
+        // get number of paths to target;
+        // if (preSum - target) already exist in Map, it means there is a valid path to the target
+        // if it doesn't exist in map, just return 0
+        int pathsToTarget = preSumMap.getOrDefault(preSum - target, 0);
+
+        // update map with latest preSum with frequency of how many paths can lead to that preSum
+        preSumMap.put(preSum, preSumMap.getOrDefault(preSum, 0) + 1); 
+
+        // recursively find other paths to target
+        int result = pathsToTarget + pathSumHelper(root.left, preSum, target, preSumMap) 
+                        + pathSumHelper(root.right, preSum, target, preSumMap);
+        
+        // restore the preSum map as recursion unwinds
+        preSumMap.put(preSum, preSumMap.get(preSum) - 1);
+ 
+        return result;
+    }
+}
