@@ -34,7 +34,7 @@ I came up with two solutions for this question: one brute-force and one much mor
 * For every character in s, I use a while loop to traverse t finding the first instance of that character in s. 
 * The index of the found character if kept track by variable indexT.
 * The search for the next character in s would start at the last indexT + 1, instead of from the beginning. This is to make sure the matching character would be in order according to s.
-* If the character is not found, indexT > length of T. If the current character we are searching for is not even the last character of s, we know s is not a subsequence of t.
+* If the character is not found, indexT > length of T - 1. If the current character we are searching for is not even the last character of s, we know s is not a subsequence of t.
 * Thus, if the original for-loop manages to exit, it means s is a subsequence of t.
 
 My brute-force solution beats:
@@ -43,10 +43,11 @@ My brute-force solution beats:
 * __O(n + m)__ where n = length of s and m = length of t
 
  ### Elegant-solution
-* My elegant solution uses String method indexOf(String substring, int fromIndex) to search for the character in c.
+* Also, uses a for-loop that iterate over each character in s
+* Uses String method indexOf(String substring, int fromIndex) to search for the current character in t.
 * When the character is found in t, I update the pointer currentIndexT to hold the current index of that matched character.
-* I repeat the search for the next character in s using indexOf() method but this time from the last IndextT + 1
-
+* I repeat the search for the next character in s using indexOf() method but this time from the last IndextT + 1.
+* if indexOf() returns -1, it means the character is not found. Return false.
 
 My elegant solution beats:
 * 100.00 % all Java submissions running-time wise.
