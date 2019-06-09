@@ -9,10 +9,7 @@ class Solution {
             return false;
         }
         
-	// keep two index pointers
         int indexT = 0;
-        int prevIndexT = 0;
-
         for (int i = 0; i < sLength; i++)
         {
             char letter = s.charAt(i);
@@ -22,8 +19,7 @@ class Solution {
             }
             else // case: the rest
             {
-                prevIndexT = indexT;  // update previous index T
-                indexT = t.indexOf(letter, prevIndexT +1); // only search string t from last index T to the end
+                indexT = t.indexOf(letter, indexT +1); // only search string t from last index T to the end
             }
             if (indexT == -1) // if letter is not found, return falsel;
             {
