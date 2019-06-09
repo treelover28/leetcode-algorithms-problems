@@ -1,0 +1,48 @@
+class Solution {
+    public boolean isSubsequence(String s, String t) // bruteforce
+    {
+        int sLength = s.length();
+        int tLength = t.length();
+        
+        if (tLength < sLength)
+        {
+            return false;
+        }
+        else if (sLength == 1 & tLength == 1)
+        {
+            return s.equals(t);
+        }
+        
+        int indexT = 0;
+        for (int i = 0; i < sLength; i++)
+        {
+            String letter = s.substring(i,i+1);
+            if (i > 0)
+            {
+                indexT++;
+            }
+            while (indexT < tLength - 1)
+            {
+                boolean matched = letter.equals(t.substring(indexT, indexT+1));
+                if (!matched)
+                {
+                    indexT++;
+                    continue;   
+                }
+                break;   
+            }
+            if (indexT == tLength - 1) // when we have already search all of t, and indexT is last character
+            {
+                if (i < sLength - 1) // if we have search all of t and letter is not even last letter of s
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                continue;
+            }
+        }
+        return true;
+    }
+}

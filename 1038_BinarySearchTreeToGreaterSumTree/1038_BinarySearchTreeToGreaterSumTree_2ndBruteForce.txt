@@ -1,0 +1,62 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode bstToGst(TreeNode root) // brute-force
+    {
+        ArrayList<Integer> vals = new ArrayList<>();
+        treeToArray(root, vals);
+        Collections.sort(vals);
+        toGST(root, vals);
+        return root;
+        // O(n^2)
+    }
+    // Method to populate array with all values of tree
+    private void treeToArray(TreeNode root, ArrayList<Integer> arr) 
+    {
+        if (root!= null)
+        {
+            arr.add(root.val);
+            if (root.right != null)
+            {
+                treeToArray(root.right, arr);
+            }
+            if (root.left != null)
+            {
+                treeToArray(root.left, arr);
+            }
+        }
+        return;
+    }
+    // method to make root.val = sum of all values >= original root.val
+    private void toGST(TreeNode root, ArrayList<Integer> vals)
+    {
+        if (root!= null)
+        {
+            int sum = 0;
+            int pos = vals.indexOf(root.val);
+            for (int i = pos; i < vals.size(); i++)
+            {
+                sum += vals.get(i);
+            }
+            root.val = sum;
+            
+            if (root.right != null)
+            {
+                toGST(root.right, vals);
+            }
+            
+            if (root.left != null)
+            {
+                toGST(root.left, vals);
+            }
+        }
+        return;
+    }
+}

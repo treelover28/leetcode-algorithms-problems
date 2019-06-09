@@ -1,0 +1,38 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution 
+{
+    int currentSum = 0;
+    public TreeNode bstToGst(TreeNode root) 
+    {
+        // traverse to right most node containing greatest value
+        if (root.right != null)
+        {
+            bstToGst(root.right);
+        }
+        // as recursion unwinds upward moving to smaller node each time,
+        // update currentSum to contain root.val
+	currentSum += root.val; 
+        // since recursion undwinded from bigger node to smaller node, 
+        // currentSum would contain the sum of all larger nodes' values anyway!
+        root.val = currentSum; // set the current node's value to the currentSum 
+    
+        
+        // as you unwind up, also check for left subtree
+        if (root.left != null)
+        {
+            bstToGst(root.left);
+            // since all values in left subtree is less than currentNode,
+            // we can repeat all steps above and update currentSum and root.val = currentSum
+            // since currentSum would be the sum of all values greater than the currentNode in the left subtree anyway.
+        } 
+        return root;
+    }
+}
