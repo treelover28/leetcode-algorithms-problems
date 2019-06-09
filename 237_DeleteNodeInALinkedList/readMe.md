@@ -32,7 +32,7 @@ I came up with two solutions:
 ### Brute Force
 * Starting from node until the second last node in the list, keep making node.val = node.next.val
 * When you reach the second last node in the list, also make it node.val = node.next.val
-* Then set the temp.next = null, effectively delete the last node
+* Then set the node.next = null, effectively delete the last node
 
 This solution beats:
 * 100.00% all Java submissions running-time wise.
