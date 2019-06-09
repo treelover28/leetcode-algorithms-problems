@@ -50,7 +50,7 @@ My brute-force solution beats:
 
 My elegant solution beats:
 * 100.00 % all Java submissions running-time wise.
-* 99.70% all Java submissions memory-usage wise.
+* 99.87% all Java submissions memory-usage wise.
 * __O(n + m)__ where n = length of s and m = length of t
 
 
