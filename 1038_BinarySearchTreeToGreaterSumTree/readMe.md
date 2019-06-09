@@ -22,7 +22,7 @@ Output: [30,36,21,36,35,26,15,null,null,null,33,null,null,null,8]
 ## Result
 I came up with 3 different solutions: 2 brute-forces and 1 elegant.
 
-**Brute-force 1**:
+### Brute-force 1:
 * My first brute-force solution traverse the tree inorderly and add all values into an Array.
 * It then traverse the tree inorderly again, but this at each node, it would compare node.val to all values stored in the array.
 * sum += all values in array that >= node.val
@@ -34,7 +34,7 @@ This algorithm beats:
 * 99.50% all Java submissions memory-usage wise.
 * __O(n<sup>2</sup>)__
 
-**Brute-force 2**
+### Brute-force 2:
 * It also traverse the tree inorderly and add all values into an Array.
 * It then sort the array using Collections.sort(Array)
 * It then traverse the tree inorderly again, but for each node, it would search for the node's position in that array and place into index pos.
@@ -47,7 +47,7 @@ This algorithm beats:
 * 97.30% all Java submissions memory-usage wise.
 * __O(n<sup>2</sup>)__
 
-**Elegant solution**
+### Elegant solution:
 * Use recursion to traverse the tree until you reach the right most node (containing the largest value)
 * As recursion unwinds upward to smaller nodes, set ```currentSum += node.val``` and set ```node.val = currentSum```
 * Thus, when recursion reach the node above, currentSum would always contain the sum of all nodes larger than current node.
