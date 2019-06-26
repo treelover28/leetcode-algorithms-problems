@@ -19,6 +19,7 @@ Output: [-1,-1]
 
 ## Result
 **Brute-Force**
+
 My brute-force solution scan the array from the beginning first to find the first instance of the number, it then scans the array from the back to find the last instance of the target number.
 If none is found, it returns [-1,-1].
 
@@ -28,6 +29,7 @@ This solution beats:
 * __O(n)__
 
 **Elegant Binary Search Solution**
+
 My elegant solution uses binary search to look for the target number in the array. 
 Once of the number is found, it scans backward to see if any same target number exists to find the very first instance.
 Then, from the position of the orginal target found, it scans forward to find the last instance of the number in the array.
