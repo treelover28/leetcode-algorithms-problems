@@ -1,0 +1,26 @@
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) 
+    {
+        ArrayList<List<Integer>> powerSet = new ArrayList<>();
+        powerSet.add(new ArrayList<Integer>()); // add null set
+        
+        for (int num : nums)
+        {
+            // iterate through each number
+            // add number to all previous subsets
+            int size = powerSet.size();
+            // use int variable to store size 
+            //since as powerSet is increasing because we keep adding set, 
+            //if we do i < powerSet.size(), the for loop below would run forever!
+            for (int i = 0; i < size; i++)
+            {
+                // deep copy of each previous subset
+                ArrayList<Integer> set = new ArrayList<>(powerSet.get(i));
+                // add current num to previous subset to form new combination
+                set.add(num);
+                powerSet.add(set);
+            }
+        }
+        return powerSet;
+    }
+}
