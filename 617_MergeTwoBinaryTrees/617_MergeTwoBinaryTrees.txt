@@ -1,0 +1,41 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution 
+{
+    public TreeNode mergeTrees(TreeNode t1, TreeNode t2) 
+    {
+        if (t1 == null && t2 == null)
+        {
+            return null; // if both corresponding nodes don't exist, return nothing.
+        }
+        
+        // if a node doesn't have an existing node on the other tree, just return the existing one
+        if (t1 != null && t2 == null)
+        {
+            return t1; 
+        }
+        
+        if (t1 == null && t2 != null)
+        {
+            return t2;
+        }
+        
+        // if both nodes exist, sum up value
+        t1.val += t2.val;
+        
+        // preorderly traverse down and recursively fill left and right children
+        t1.left = mergeTrees(t1.left, t2.left);
+        t1.right = mergeTrees(t1.right, t2.right);
+        
+        // return fully merge trees after recursion ends
+        return t1;
+    }
+}
+}
