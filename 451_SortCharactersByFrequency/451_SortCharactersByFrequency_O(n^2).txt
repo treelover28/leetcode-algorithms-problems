@@ -1,0 +1,38 @@
+class Solution {
+    public String frequencySort(String s) 
+    {
+        // Brute-force O(n^2)
+        HashMap<Character,Integer> charFreq = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) // initialize hashmap with character's frequency
+        {
+            Character c = s.charAt(i);
+            charFreq.put(c, charFreq.getOrDefault(c,0) + 1);
+            
+        }
+        StringBuilder res = new StringBuilder();
+        Map.Entry<Character, Integer> maxEntry = null;
+        
+        while(!charFreq.isEmpty())
+        {
+            for (Map.Entry<Character, Integer> e : charFreq.entrySet()) // find current max
+            {
+                if (maxEntry == null || e.getValue().compareTo(maxEntry.getValue()) > 0)
+                {
+                    maxEntry = e;
+                }
+            }
+            // append character of maxEntry
+            Character character = maxEntry.getKey();
+            Integer maxCount = maxEntry.getValue();
+            for (int i = 0; i < maxCount; i++)
+            {
+                res.append(character);
+            }
+            // remove maxEntry from charFreq so next iteration would find next maxEntry
+            charFreq.remove(character);
+            // reset maxEntry
+            maxEntry = null;
+        }
+        return res.toString();
+    }
+}
