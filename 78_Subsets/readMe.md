@@ -20,6 +20,7 @@ Output:
 ```
 
 ## Result
+### Add new number to all previous subsets
 My algorithm adds a null set to the PowerSet first. 
 Afterward, it iterates through nums, add num to deep copies of all previous subsets in PowerSet
 Add all the updated subsets back into PowerSet
@@ -44,6 +45,16 @@ For 3, PowerSet contains ```[[],[1],[2],[1,2]]```.
 My solution beats:
 * 100.00% all Java submissions running-time wise
 * 98.92% all Java submissions memory-wise
-* __O(2<sup>n</sup>)__ uhhhh O.o
+* __O(n2<sup>n</sup>)__ (this is the best running-time for this solution)
 
+### Backtracking
+I have an index called __start__ that keeps track of where the current nums[i] is. I use a for-loop that traverse that list from the index __start__ to the end of the array, with each new nums[i], we add to a temporary subset, which is then added to the result Powerset. I then make the function call itself recursively, but this time with the index __start__ incremented. The next recursive call, in turn, will add the next nums[i] to our temp subset, and this new subset is added to the powerset again, and the recursive call happens once again with the index __start__ once again incremented. 
 
+Once index __start__ >= nums.length, the for-loop doesn't get initiated, and recursion starts to unwind back to the previous stack where it left off (backtrack). At this point, the loop will add the next nums[i] according to whatever index __start__ was at the recursive frame. 
+
+The process keeps repeating until we have found all possible combinations.
+
+This backtracking solution beats:
+* 99.90% all Java submissions running-time wise.
+* 100.00% all Java submissions memory-usage wise.
+* __O(n2<sup>n</sup>)__
