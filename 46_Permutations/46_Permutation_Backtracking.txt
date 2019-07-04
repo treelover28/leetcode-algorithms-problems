@@ -1,0 +1,30 @@
+class Solution {
+    public List<List<Integer>> permute(int[] nums) 
+    {
+        List<List<Integer>> res = new ArrayList<>();
+        backtrack(nums, res, new ArrayList<Integer>());
+        return res;
+    }
+    
+    private void backtrack(int[] nums, List<List<Integer>> res, List<Integer> currentPermutation)
+    {
+        if (currentPermutation.size() == nums.length)
+        {
+            res.add(new ArrayList<>(currentPermutation)); // add deep copy of permutation found
+        }
+        else
+        {
+            for (int i = 0; i < nums.length; i++)
+            {
+                if (currentPermutation.contains(nums[i])) // if number is already in set, skip it
+                {
+                    continue;
+                }
+            
+                currentPermutation.add(nums[i]); // add new number to set
+                backtrack(nums, res, currentPermutation); // recursive call function to keep checking and skipping number
+                currentPermutation.remove(currentPermutation.size() - 1);
+            }
+        }
+    }
+}
