@@ -1,0 +1,39 @@
+class Solution {
+    public List<String> letterCombinations(String digits) 
+    {
+        if (digits.length() == 0)
+        {
+            return new ArrayList<>();
+        }
+        List<String> res = new ArrayList<>();
+        String[] charList = new String[] {"","", "a,b,c", "d,e,f", "g,h,i", "j,k,l", "m,n,o", "p,q,r,s", "t,u,v", "w,x,y,z"};
+        fill(digits, new StringBuilder(), res, 0, digits.length(), charList);
+        return res;
+    }
+
+    private void fill(String d, StringBuilder temp, List<String> res, int start, int stringLength, String[] charList)
+    {
+        if (temp.length() == stringLength)
+        {
+            res.add(temp.toString());
+        }
+        else
+        {
+            for (int i = start; i < stringLength; i++)
+            {
+                String[] list = charList[Character.getNumericValue(d.charAt(i))].split(",");
+                if (list == null || list.length == 1) // "".split(",") return empty array of size 1
+                {
+                    return; // if digit is not in 2-9 range, just break out of recursion
+                }
+                for (int j = 0; j < list.length; j++) // traverse the individual character list
+                {
+                    
+                    temp.append(list[j]);
+                    fill(d, temp, res, i + 1, stringLength, charList); // recursively append character from next digit
+                    temp.delete(temp.length() - 1, temp.length());  
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,54 @@
+class Solution {
+    public List<String> letterCombinations(String digits) 
+    {
+        List<String> res = new ArrayList<>();
+        fill(digits, new StringBuilder(), res, 0, digits.length());
+        return res;
+    }
+    
+    private List<Character> charList(char c)
+    {
+        switch (c)
+        {
+            case '2':
+                return new ArrayList<Character>(Arrays.asList('a','b','c'));
+            case '3':
+                return new ArrayList<Character>(Arrays.asList('d','e','f'));
+            case '4':
+                return new ArrayList<Character>(Arrays.asList('g','h','i'));
+            case '5':
+                return new ArrayList<Character>(Arrays.asList('j','k','l'));
+            case '6':
+                return new ArrayList<Character>(Arrays.asList('m','n','o'));
+            case '7':
+                return new ArrayList<Character>(Arrays.asList('p','q','r','s'));
+            case '8':
+                return new ArrayList<Character>(Arrays.asList('t','u','v'));
+            case '9':
+                return new ArrayList<Character>(Arrays.asList('w','x','y','z'));
+            default:
+                return null;  
+        }
+    }
+    
+    private void fill(String d, StringBuilder temp, List<String> res, int start, int stringLength)
+    {
+        if (temp.length() == stringLength)
+        {
+            res.add(temp.toString());
+        }
+        else
+        {
+            for (int i = start; i < stringLength; i++)
+            {
+                List<Character> list = charList(d.charAt(i));
+                for (int j = 0; j < list.size(); j++)
+                {
+                    temp.append(list.get(j));
+                    fill(d, temp, res,i + 1, stringLength);
+                    temp.delete(temp.length() - 1, temp.length());  
+                }
+            }
+        }
+    }
+}
