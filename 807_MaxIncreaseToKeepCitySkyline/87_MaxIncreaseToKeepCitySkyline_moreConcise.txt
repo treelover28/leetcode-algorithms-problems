@@ -1,0 +1,33 @@
+class Solution {
+    public int maxIncreaseKeepingSkyline(int[][] grid) 
+    {
+       
+        int N = grid.length;
+    
+        // fill up two arrays, one with each row's maximum number
+        // the other with each column's maximum number
+        int rowMax[] = new int[N];
+        int colMax[] = new int[N];
+        for (int r = 0; r < N; r++)
+        {
+            for (int c = 0; c < N; c++)
+            {
+                rowMax[r] = Math.max(rowMax[r], grid[r][c]);
+                colMax[c] = Math.max(colMax[c], grid[r][c]);
+            }
+        }
+        
+        // determine total increasable height
+        int maxIncrease = 0;
+        for (int i = 0; i < N; i++)
+        {
+            for (int j = 0; j < N; j++)
+            {
+                maxIncrease += (Math.min(rowMax[i], colMax[j]) - grid[i][j]);
+                // the maximum increase for a number is restricted by the lower number between its row's max and its column's max.
+            }
+        }
+        
+        return maxIncrease;
+    }
+}

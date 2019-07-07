@@ -1,0 +1,51 @@
+class Solution {
+    public int maxIncreaseKeepingSkyline(int[][] grid) 
+    {
+       
+        int rowLength = grid.length;
+        int colLength = grid[0].length;
+        
+         // fill up an array with each row's maximum number
+        int rowMax[] = new int[rowLength];
+        for (int r = 0; r < rowLength; r++)
+        {
+            int rMax = grid[r][0];
+            for (int c = 0; c < colLength; c++)
+            {
+                if (grid[r][c] > rMax)
+                {
+                    rMax = grid[r][c];
+                }
+            }
+            rowMax[r] = rMax;
+        }
+        
+        // fill up another array colMax with each column's maximum number
+        int colMax[] = new int[colLength];
+        for (int c = 0; c < colLength; c++)
+        {
+            int cMax = grid[0][c];
+            for (int r = 0; r < rowLength; r++)
+            {
+                if (grid[r][c] > cMax)
+                {
+                    cMax = grid[r][c];
+                }
+            }
+            colMax[c] = cMax;
+        }
+        
+        // determine total increasable height
+        int maxIncrease = 0;
+        for (int i = 0; i < rowLength; i++)
+        {
+            for (int j = 0; j < colLength; j++)
+            {
+                maxIncrease += (Math.min(rowMax[i], colMax[j]) - grid[i][j]);
+                // the maximum increase for a number is restricted by the lower number between its row's max and its column's max.
+            }
+        }
+        
+        return maxIncrease;
+    }
+}
