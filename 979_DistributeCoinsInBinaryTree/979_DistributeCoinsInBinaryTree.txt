@@ -1,0 +1,35 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    private int moves;
+    public int distributeCoins(TreeNode root) 
+    {
+        moves= 0;
+        helper(root);
+        return moves
+    }
+    
+    private int helper(TreeNode node)
+    {
+        if (node == null) return 0;
+        int coins = helper(node.left) + helper(node.right);
+        
+        if (node.val == 0)
+        {
+            coins -= 1; // need to take 1 coin from its children
+        }
+        else
+        {
+            coins += (node.val - 1); // if current node has excess coins, we increment the numbers of coins needed to be moved
+        }
+        moves += Math.abs(coins);
+        return coins;
+    }
+}
