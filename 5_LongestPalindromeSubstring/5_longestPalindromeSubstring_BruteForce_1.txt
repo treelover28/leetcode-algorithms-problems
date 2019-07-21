@@ -1,0 +1,53 @@
+class Solution {
+    public String longestPalindrome(String s) 
+    {
+        int l = s.length();
+        if (l < 2) 
+        {
+            return s;
+        }
+
+	/** Brute Force solution- works but extremely slow and inefficient
+	* would TLE on LeetCode
+	*/
+        StringBuilder str = new StringBuilder();
+        ArrayList<String>[] bucket = new ArrayList[l];
+        for (int i = 0; i < l-1; i++)
+        {
+            str.append(s.charAt(i));
+            for (int j = i+1; j < l; j++)
+            {
+                str.append(s.charAt(j));
+		// str.reverse() would reverse the str string itself, we must apply the reverse on a deep copy
+		String reverse = new StringBuilder(str).reverse().toString();
+             	
+		// StringBuilder's equals() method is not overriden to truly test the equality of the content, but merely the object's address.
+		// we must convert to String and use its equals() method.
+                if (str.toString().equals(reverse))
+                {
+                    int length = str.length();
+                    if (bucket[length - 1] == null) // place the result into a bucket whose index is the (string's length - 1)
+                    {
+                        bucket[length - 1] = new ArrayList<>();
+                    }
+                    bucket[length - 1].add(str.toString());
+                }
+            }
+            str = new StringBuilder();
+        } 
+  
+        String res = null;
+        for (int j = bucket.length - 1; j >= 0; j--) // start from highest length
+        {
+            if (bucket[j] == null) continue; // skip any empty bucket
+            res = bucket[j].get(0);
+            break; // break out of loop after first result found
+        }
+
+        if (res == null) // if a string is not palindromic anywhere, just return the first character, which by itself is technically a palindrome of itself.
+        {
+            return s.substring(0,1);
+        }
+        return res;
+    }
+}
