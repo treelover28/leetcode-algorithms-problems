@@ -1,0 +1,33 @@
+lass Solution {
+    public int lengthOfLongestSubstring(String s) 
+    {
+        int length = s.length();
+        if (length < 2)
+        {
+            return length;
+        }
+        HashMap<Character, Integer> charMap = new HashMap<>();
+        StringBuilder sub = new StringBuilder();
+        int maxLength = 0;
+	
+	/* sliding window technique */
+	// have two pointers i and j where i keeps progressing forward.
+	// when i gets to a character that repeats, we count the distance between and i and j the length of a substring without repeating characters
+	// j then slides up to the character next to the previous instance of the repeating character.
+	// should i encounter another repeating character, the new distance between i and current j will be the new length
+
+        for (int i = 0, j = 0; i < length; i++)
+        {
+            Character c = s.charAt(i);
+            if (charMap.containsKey(c)) // if letter already exist in substring 
+            {
+                j = Math.max(j, charMap.get(c) + 1); // get index of letter after the first occurance of repeating character
+               
+            }
+	    // place the latest index of the character into charMap
+            charMap.put(c, i); 
+            maxLength = Math.max(maxLength, i - j + 1);
+        }
+        return maxLength;
+    }
+}

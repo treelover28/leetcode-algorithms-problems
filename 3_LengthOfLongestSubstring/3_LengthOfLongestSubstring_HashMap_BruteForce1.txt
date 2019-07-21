@@ -1,0 +1,32 @@
+class Solution {
+    public int lengthOfLongestSubstring(String s) 
+    {
+        int length = s.length();
+        if (length < 2)
+        {
+            return length;
+        }
+        HashMap<Character, Integer> charMap = new HashMap<>();
+        StringBuilder sub = new StringBuilder();
+        int maxLength = 0;
+        for (int i = 0; i < length; i++)
+        {
+            Character c = s.charAt(i);
+            Integer count = charMap.get(c);
+            if (count == null) // if letter is new in substring aka not in charMap
+            {
+                charMap.put(c, 1);
+                sub.append(c);
+                continue;
+            }
+            // if letter already exist in substring
+            if (sub.length() > maxLength)
+            {
+                maxLength = sub.length();
+            }
+            sub = new StringBuilder(sub.substring(sub.indexOf(c.toString()) + 1));
+            sub.append(c);
+        }
+        return Math.max(maxLength,sub.length());
+    }
+}
