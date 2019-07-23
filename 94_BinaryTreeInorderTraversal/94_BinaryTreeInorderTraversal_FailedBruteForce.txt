@@ -1,0 +1,53 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode curr) 
+    {
+	// failed brute-force, traversed post-orderly.
+	// Disadvantage: it deletes the entire tree after traversal so not practical!
+        List<Integer> res = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(curr);
+        
+        while (!stack.empty())
+        {
+            System.out.println("res: " + res);
+            System.out.println("top: " + stack.peek().val);
+            if (curr.left != null)
+            {
+                curr = curr.left;
+                stack.push(curr);
+                continue;
+            }
+            res.add(stack.pop().val);
+            if (curr.left == null && curr.right == null && !stack.empty())
+            {
+                TreeNode temp = stack.peek();
+                if (temp.left == curr)
+                {
+                    temp.left = null;
+                }
+                if (temp.right == curr)
+                {
+                    temp.right = null;
+                }
+                curr = temp;
+                // set current pointer to the front element in stack to be visited
+            }
+            if (curr.right != null)
+            {
+                curr = curr.right;
+                stack.push(curr);
+                continue;
+            }
+        }
+        return res;
+    }
+}

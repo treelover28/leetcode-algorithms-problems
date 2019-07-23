@@ -1,0 +1,50 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) 
+    {
+        List<Integer> res = new ArrayList<>();
+        TreeNode curr = root;
+        // Morris Traversal 
+        while (curr != null)
+        {
+            if (curr.left == null)
+            {
+                res.add(curr.val);
+                curr = curr.right;
+            }
+            else
+            {
+                // Inorder predecessor is defined as the rightmost node on current's left subtree
+                // inorder predecessor's right child cannot be curr, this detail sounds weird for now but will make sense later.
+                TreeNode predecessor = curr.left;
+                while (predecessor.right != null & predecessor.right!= curr)
+                {
+                    predecessor = predecessor.right;
+                }
+                
+                if (predecessor.right == null) // on our first visit, the predecessor is guaranteed to have no right child
+                {
+                    predecessor.right = curr;
+                    // make predecessor's right child to lead to current.
+                    // this acts as a link between predecessor to current that allows us to traverse back up later.
+                    curr = curr.left;
+                }
+                else // on our second visit, predecessor.right won't be null because of the link we previously established
+                {
+                    predecessor.right = null; // we delete that link
+                    res.add(curr.val); // add curr's val to res because we can be sure we have visited all its left subtree.
+                    curr = curr.right; // go to current's right subtree
+                }
+            }
+        }
+        return res;
+    }
+}
