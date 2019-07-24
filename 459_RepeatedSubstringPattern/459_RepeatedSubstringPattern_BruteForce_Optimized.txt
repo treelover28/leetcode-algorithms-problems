@@ -1,0 +1,26 @@
+class Solution {
+    public boolean repeatedSubstringPattern(String s) 
+    {
+        int len = s.length();
+        // Brute-Force O(n)- optimized
+        String sub = "";
+        for (int i = len/2; i > 0; i--)
+        {
+            if (len % i == 0) // only check if the substring's length is a factor of s.length
+            {
+                sub = s.substring(0,i);
+                StringBuilder temp = new StringBuilder();
+                for (int times = 0; times < (len/i); times++)
+                {
+                    temp.append(sub);
+                }
+                if (temp.toString().equals(s))
+                {
+                    return true;
+                } 
+            }
+            
+        }
+        return false;
+    }
+}

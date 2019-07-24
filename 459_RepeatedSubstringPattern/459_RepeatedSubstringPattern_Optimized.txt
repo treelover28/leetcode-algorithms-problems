@@ -1,0 +1,29 @@
+class Solution {
+    public boolean repeatedSubstringPattern(String s) 
+    {
+        int len = s.length();
+        
+        String sub = "";
+        for (int i = len/2; i > 0; i--)
+        {
+            if (len % i == 0) // only check if substring's length is a factor of s.length
+            {   
+		int times = len/i; // number of times you need to repeat substring to form s
+                sub = s.substring(0,i);
+                int j;
+                for (j = 0; j < times; j++)
+                {
+                    if(!sub.equals(s.substring(j*i,i+j*i))) //no need to create a whole string, just compare the portions
+                    {
+                        break;
+                    }
+                } 
+                if (j == times) // if all portions have been successfully compared, it means there is a repeated substring pattern
+                {
+                    return true;
+                }
+            } 
+        }
+        return false;
+    }
+}

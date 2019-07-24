@@ -1,0 +1,57 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) 
+    {
+        List<Integer> res = new LinkedList<>();
+        if (root == null) return res;
+       
+        TreeNode curr = root;
+        // Morris Traversal
+        while (curr != null)
+        {
+            if (curr.left == null) // if current doesn't have left subtree, we add root's val to res and move to right subtree
+            {
+                res.add(curr.val);
+                curr = curr.right;
+            }
+            else
+            {
+                // preorder predecessor is defined as the rightmost node in curr's left subtree
+                TreeNode pred = curr.left;
+                while (pred.right != null & pred.right != curr) // pred.right cannot lead to curr, this detail seems weird right now but will make sense later
+                {
+                    pred = pred.right;
+                }
+                // on our first visit, predecessor's right child is guaranteed to be null
+                // since predecessor by definition is the RIGHTMOST node on curr's left subtree
+                if (pred.right == null)
+                {
+                    pred.right = curr; // we make predecessor's right child to a link leading back to curr
+                    // this link will act as our way to travel back to curr after we have visited pred.
+                    res.add(curr.val); // add curr.val to res to curr right now is the node whose subtrees we haven't visited
+                    curr = curr.left; // travel to left child
+                }
+                else 
+                {
+                    // on our second visit to curr, 
+                    // since we have already established the link pred.right == curr previously, 
+                    // pred.right != now
+                    // if a link exist, it means we have already added curr.val to res and that we have fully visit curr's left subtree before
+                    // we delete the link to restore the tree and traverse to curr's right subtree
+                    pred.right = null;
+                    curr = curr.right;
+                }
+            }
+            // the while-loop keeps running until curr == null, this means we have fully traversed the tree
+        }
+        return res;
+    }
+}

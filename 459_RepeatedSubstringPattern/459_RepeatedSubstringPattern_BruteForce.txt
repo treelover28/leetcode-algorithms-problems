@@ -1,0 +1,23 @@
+class Solution {
+    public boolean repeatedSubstringPattern(String s) 
+    {
+        int len = s.length();
+        // brute force O(n)
+        String sub = "";
+        for (int i = len/2; i > 0; i--)
+        {
+            sub = s.substring(0,i);
+            StringBuilder temp = new StringBuilder();
+            for (int times = 0; times < (len/i); times++)
+            {
+                temp.append(sub);
+            }
+	    // only compare content if lengths are equal	
+            if (temp.length() == len && temp.toString().equals(s))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+}
