@@ -1,0 +1,28 @@
+class Solution {
+    public boolean isPalindrome(String s) 
+    {
+        // for a palindrome like "abba", its first letter == last letters.
+        // second letter == second to last letter, and so on...
+        // have two pointers to compare letter positions from the front and end inward.
+        char[] str = s.toCharArray();
+        int forward = 0;
+        int backward = s.length() - 1;
+        while (forward < backward)
+        {
+            if (!Character.isLetterOrDigit(str[forward])) // skip anyway non-digit and non-letter characters
+            {
+                forward++;
+            }
+            else if (!Character.isLetterOrDigit(str[backward]))
+            {
+                backward--;
+            }
+            else if (Character.toLowerCase(str[forward++]) != Character.toLowerCase(str[backward--]))
+                // compare then increment forward and backward inward
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+}

@@ -1,0 +1,47 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) 
+    {
+        List<Integer> res = new ArrayList<>();
+        if (root == null) return res;
+        
+        // have two stacks
+        Stack<TreeNode> stack = new Stack<>();
+        Stack<Integer> output = new Stack<>();
+        stack.push(root);
+        
+        TreeNode curr = root;
+        while(!stack.empty())
+        {
+            curr = stack.pop();
+            output.push(curr.val); // push value of cur into output stack
+            if (curr.left != null) // push left node first
+            {
+                stack.push(curr.left);
+            }
+            if (curr.right != null) // then push right node
+            {
+                stack.push(curr.right);
+            }
+            // initially,since stack is LIFO, when we pop, we would actually be popping (hence, traversing) the right child first
+            // then the left child into the output stack.
+        }
+        
+        while (!output.empty()) 
+        // however, when we pop the ouput stack into res
+        //we would in turn pop the left child's value out first and then the right child's value
+        {
+            res.add(output.pop());
+        }
+        
+        return res;
+    }
+}
