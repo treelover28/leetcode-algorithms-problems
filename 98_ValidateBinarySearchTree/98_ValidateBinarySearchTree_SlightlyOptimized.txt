@@ -1,0 +1,62 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+
+class Solution {
+    boolean isValid = true; // true by default unless changed by function
+    // Time: worst case: O(n) | expected: O(logn)
+    // Space: worst case: O(n) | expected: O(logn)
+    public boolean isValidBST(TreeNode root) 
+    {
+        if (root == null) return true;
+        LinkedList<Integer> nodes = new LinkedList<>();
+        // Because inorder traversal traverse a proper binary search tree's nodes in ascending order
+        // we can maintain a linked list of two latest nodes traversed
+        // if first item >= second item, the ascending order is broken, thus the tree is not valid
+        // else, we remove the first item in the linked list so the next recursion call will add in the new "second" item, and we can recheck if the pattern preserves.
+        inorderFill(root, nodes);
+        return isValid;
+    }
+    
+    private void inorderFill(TreeNode node, LinkedList<Integer> list)
+    {
+        if (isValid == false)
+        {
+            return;
+        }
+        
+        if (node.left != null)
+        {
+            inorderFill(node.left, list);
+        }
+        
+        list.add(node.val);
+        if (list.size() > 1) // only check if linked list has more than 1 values
+        {
+            if (list.get(0) >= list.get(1))
+            {
+                isValid = false; 
+                // if first item is greater than second item, tree is not valid
+                // return because there is no need to continue checking further
+                return;
+            }
+            else
+            {
+                // if first item is smaller than second item, tree is valid so far
+                // remove first item, and keep checking during next recursive call when a new "second" item is added in
+                // if the monotonically increasing trend is broken, we know tree is invalid
+                list.removeFirst();
+            }
+        }
+        if (node.right != null)
+        {
+            inorderFill(node.right, list);
+        }
+    }
+}

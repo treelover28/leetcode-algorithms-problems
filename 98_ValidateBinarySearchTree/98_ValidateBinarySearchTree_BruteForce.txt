@@ -1,0 +1,50 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean isValidBST(TreeNode root) 
+    {
+	// time: O(n) two passes
+	// space: O(n) 
+
+        if (root == null) return true;
+        List<Integer> nodes = new ArrayList<>();
+        // fill the array list using inorder traversal
+        inorderFill(root, nodes);
+        // if the tree is a proper binary search tree, inorder traversal will return an array with values in ascending order
+        if (nodes.size() < 2)
+        {
+            return true;
+        }
+        
+        for (int i = 0; i < nodes.size() - 1; i++)
+        {
+            if (nodes.get(i) >= nodes.get(i+1)) // if the monotonically increasing trend is broken, the tree is not a proper binary tree
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private void inorderFill(TreeNode node, List<Integer> list)
+    {
+        if (node.left != null)
+        {
+            inorderFill(node.left, list);
+        }
+        
+        list.add(node.val);
+        
+        if (node.right != null)
+        {
+            inorderFill(node.right, list);
+        }
+    }
+}
