@@ -1,0 +1,53 @@
+class Solution {
+    public boolean isValid(String s) 
+    {
+        if (s.length() % 2 != 0) return false; // if length is odd, false by default
+        Stack<Character> stack = new Stack<>();
+        
+        for (int i = 0; i < s.length(); i++)
+        {
+            char c = s.charAt(i);
+            if (c == '(' || c == '{' || c== '[')
+            {
+                stack.push(c); // push opening brackets to stack
+            }
+            else if (c == ')')
+            {
+                if (!stack.empty() && stack.peek() == '(')
+                {
+                    stack.pop();
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (c == '}')
+            {
+                if (!stack.empty() && stack.peek() == '{')
+                {
+                    stack.pop();
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (c == ']')
+            {
+                if (!stack.empty() && stack.peek() == '[')
+                {
+                    stack.pop();
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        
+        if (!stack.empty()) return false;
+        
+        return true;
+    }
+}

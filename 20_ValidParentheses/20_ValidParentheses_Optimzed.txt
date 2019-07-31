@@ -1,0 +1,33 @@
+class Solution {
+    public boolean isValid(String s) 
+    {
+        if (s.length() % 2 != 0) return false; // if length is odd, false by default
+        Stack<Character> stack = new Stack<>();
+        
+        for (int i = 0; i < s.length(); i++)
+        {
+            char c = s.charAt(i);
+            if (c == '(')
+            {
+                stack.push(')');
+            }
+            else if (c == '{')
+            {
+                stack.push('}');
+            }
+            else if (c == '[')
+            {
+                stack.push(']');
+            }
+            else if (stack.empty() || stack.pop() != c) 
+		// if closing bracket is first character, false by default
+                // otherwise, if closing bracket doesn't match the popped version,
+		// the opening bracket is not in the correct corresponding position
+            {
+                return false;
+            }
+        }
+        return stack.empty();
+            
+    }
+}
