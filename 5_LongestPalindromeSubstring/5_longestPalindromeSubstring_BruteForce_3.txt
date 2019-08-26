@@ -9,12 +9,14 @@ class Solution {
         
         int len = 0;
         String res = null;
-        for (int i = l - 1; i >= 0; i--)
+        for (int i = l - 1; i >= 0; i--) // one index scanning backward
         {
-            for (int j = 0; j < l; j++)
+            for (int j = 0; j < l; j++) // one index scanning forward
             {
-                if (j == i) continue;
-                if (j-i+1 > len && s.charAt(i) == s.charAt(j))
+                if (j == i) continue; 
+                if (j-i+1 > len && s.charAt(i) == s.charAt(j)) 
+                // only check if the distance between the two indices exceeds long palindromic substring known so far
+                // AND the 2 characters are equal
                 {
                     String str = s.substring(i, j + 1);
                     String reverse = new StringBuilder(str).reverse().toString();
