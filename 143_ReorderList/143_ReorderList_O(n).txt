@@ -1,0 +1,76 @@
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public void reorderList(ListNode head) 
+    {
+        // Initial O(n) approach. 
+        // Since the hidden n constant which is O(4.5n) is somewhat high, the function doesn't do well time-wise
+        
+        ArrayList<ListNode> list = new ArrayList<>();
+        // find the size of the list while adding each Node to an ArrayList
+        // this way, we can pseudo-rearrage the nodes into its desireable formation without changing the links
+        ListNode curr = head;
+        while(curr != null)
+        {
+            list.add(curr);
+            curr = curr.next;
+        } 
+        int size = list.size();
+        if (size <= 1) return; // list of less than one node is trivially the same after reordering
+        
+        Stack<ListNode> stack = new Stack<>();
+        
+        // use stack to reverse the order of nodes after the middle node
+        // L1-L2-L3-L4-L5 becomes L1-L2-L5-L4-L3
+        // further rearrangement would be done later
+        for (int i = (size/2); i < size; i++)
+        {
+            stack.push(list.get(i));
+        }
+           
+        for (int k = (size/2); k < size; k++)
+        {
+            list.set(k, stack.pop());
+        }
+          
+        ArrayList<ListNode> l2 = new ArrayList<>();
+        
+        for (int j = 0; j <= size/2; j++)
+        {
+            // Add one node before Lmiddle first and then add the corresponding node after Lmiddle
+            // if size is even
+            // L1-L2-L4-L3 becomes L1-L4-L2-L3
+            // if size is odd
+            // L1-L2-L5-L4-L3 becomes L1-L5-L2-L4-L5-L3
+            // since the second to last node get repeated, we just remove it from the arraylist
+            // effectively making it L1-L5-L2-L4-L3
+            if (size/2 + j < size)
+            {
+                l2.add(list.get(j));
+                l2.add(list.get(size/2 + j));
+            }
+        } 
+        if (size % 2 != 0) // if size is odd, remove the excess element
+        {
+           l2.remove(size - 1);
+        }
+        
+        // re-establish links, since the ListNode are contained and used by the ArrayList l2
+        // they are live objects. Thus, changing the next reference from one ListNode to the next won't actually 
+        // get it deleted by the garbage collector
+        for (int z = 0; z < size - 1; z++)
+        {
+            l2.get(z).next = l2.get(z+1);
+        }
+        
+        // nullify last link
+        l2.get(size - 1).next = null;
+    }
+}
