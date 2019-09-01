@@ -1,0 +1,155 @@
+class MyLinkedList {
+
+    /** Initialize your data structure here. */
+    private ListNode head;
+    private int size;
+    
+    public MyLinkedList() 
+    {
+        this.head = null;
+        this.size = 0;
+    }
+    
+    /** Get the value of the index-th node in the linked list. If the index is invalid, return -1. */
+    public int get(int index) 
+    {
+        if(index >= size || index < 0) return -1; // invalid index
+        
+        ListNode curr = this.head;
+        int count = 0;
+        while(curr!= null && count < index) 
+            // traverse to index-th node
+            // use counter to know when to stop
+        {
+            curr = curr.next;
+            count++;
+        }
+        return curr.val;
+    }
+    
+    /** Add a node of value val before the first element of the linked list. 
+    After the insertion, the new node will be the first node of the linked list. */
+    public void addAtHead(int val) 
+    {
+        if (this.head == null) // if list is empty 
+        {
+            this.head = new ListNode(val); // make head the new item
+        }
+        else
+        {
+            // store current head reference (list) in variable curr before changing it
+            ListNode curr = this.head;
+            // make head store the new node
+            this.head = new ListNode(val);
+            // make new head points to previous reference stored in curr
+            this.head.next = curr;
+        }
+        size++;     
+    }
+    
+    /** Append a node of value val to the last element of the linked list. */
+    public void addAtTail(int val) 
+    {
+        if (this.head == null)// if empty list, just set head to be the new node
+        {
+            this.head = new ListNode(val);
+        }
+        else
+        {
+            // else, traverse toward the end
+            ListNode curr = this.head;
+            while (curr.next != null)
+            {
+                curr = curr.next;
+            }
+            // point ending node to new node
+            curr.next = new ListNode(val);
+        }
+        size++;
+    }
+    
+    /** Add a node of value val before the index-th node in the linked list. 
+    If index equals to the length of linked list, the node will be appended to the end of linked list. 
+    If index is greater than the length, the node will not be inserted. */
+    public void addAtIndex(int index, int val) 
+    {
+        if (index > size) return; // invalid index
+        else if (index == size)
+        {
+            this.addAtTail(val); 
+        }
+        else if (index <= 0) // the direction didn't specifically stated this
+            // but it seems like for any index <= 0
+            // the test cases indicate we need to add the new node at head!
+        {
+            this.addAtHead(val);
+        }
+        else
+        {
+            // else, if the index is valid
+            int count = 0;
+            ListNode curr = this.head; // 0-1-2-3-4-5
+            while(count + 1 < index) // stop at the node before the original index-th node
+            {
+                curr = curr.next;
+                count++;
+            }
+            // store original index-th node along with its references into ListNode next
+            ListNode next = curr.next;
+            // make new node
+            ListNode newNode = new ListNode(val);
+            // point the current node (which is before the index-th node) to point to new node
+            curr.next = newNode;
+            // point newNode to the original index-th node to reconnect the list
+            newNode.next = next;
+            size++;
+        }
+    }
+    
+    /** Delete the index-th node in the linked list, if the index is valid. */
+    public void deleteAtIndex(int index) 
+    {
+        if (index >= size || index < 0) return; // invalid index
+        else if (index == 0)
+        {
+            if (this.head == null) return;
+            this.head = this.head.next;
+            // make head reference to point to the 2nd item
+        }
+        else
+        {
+            ListNode curr = this.head;
+            int count = 0;
+            while(count + 1 < index) // stop at node before index-th node
+            {
+                curr = curr.next;
+                count++;
+            }
+            // connect node to node after the index-th node
+            curr.next = curr.next.next;
+        }
+        size--;
+    }
+    
+    private class ListNode
+    {
+        private int val;
+        private ListNode next;
+        
+        public ListNode(int val)
+        {
+            this.val = val; 
+            this.next = null;
+        }
+    }
+}
+
+/**
+ * Your MyLinkedList object will be instantiated and called as such:
+ * MyLinkedList obj = new MyLinkedList();
+ * int param_1 = obj.get(index);
+ * obj.addAtHead(val);
+ * obj.addAtTail(val);
+ * obj.addAtIndex(index,val);
+ * obj.deleteAtIndex(index);
+ */

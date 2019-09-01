@@ -1,0 +1,46 @@
+class Solution {
+    public int[][] kClosest(int[][] points, int K) 
+    {
+        // create new structure to store points with double distance
+        int r = points.length;
+        int c = points[0].length;
+        Double[][] pointsDistance = new Double[r][c + 1];
+        for (int i = 0; i < r; i++)
+        {
+            pointsDistance[i][0] = Double.valueOf(points[i][0]); 
+            pointsDistance[i][1] = Double.valueOf(points[i][1]);
+            pointsDistance[i][2] = distanceFromOrigin(points[i]);
+        }
+        
+        // sort new structure by distance using the overloaded comparator
+        Arrays.sort(pointsDistance, compareDistance);
+        int[][] result = new int[K][c];
+        
+        for (int i = 0; i < K; i++)
+        {
+            result[i][0] = (pointsDistance[i][0]).intValue(); 
+            result[i][1] = (pointsDistance[i][1]).intValue(); 
+        }
+        
+        return result;
+    }
+    
+    private double distanceFromOrigin(int[] point)
+    {
+        double x = point[0];
+        double y = point[1];
+        // add 3rd data element to be distance
+        double distance = Math.sqrt(x*x + y*y);
+        return distance;
+    }
+    
+    // override comparator to compare by distance
+    final Comparator<Double[]> compareDistance = new Comparator<Double[]>()
+    {
+        public int compare(Double[] a, Double[] b) 
+        {
+            return Double.compare(a[2], b[2]);
+        }
+    };
+
+}

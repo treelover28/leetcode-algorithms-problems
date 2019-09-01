@@ -1,0 +1,45 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode removeElements(ListNode head, int val) 
+    {
+        ListNode curr = head;
+        if (curr == null) return head;
+        
+        ArrayList<ListNode> list = new ArrayList<>();
+        while(curr!= null)
+        {
+            if (curr.val != val) // only add ListNode with non-matching val to list
+            {
+                list.add(curr);
+            }
+            curr = curr.next;
+        }
+        
+        int n = list.size();
+        // n == 0 in cases where the input is a list of matching vals only
+        // like [1,1,1,1,1,1] and val == 1
+        // the while-loop would still run, but it doesn't add any values to list
+        // curr will keep advancing until it becomes a null node.
+        
+        if (n == 0) return curr;
+        
+        for (int i = 0; i < n - 1; i++) // connect the nodes in list
+        {
+            list.get(i).next = list.get(i+1);
+        }
+        
+        // nullify last link so if any nodes with matching vals that is still attached to last node in list gets removed
+        list.get(n - 1).next = null; 
+        // set head to be first node in list
+        head = list.get(0);
+        
+        return head;
+    }
+}

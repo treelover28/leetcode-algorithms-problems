@@ -15,7 +15,7 @@ class Solution {
         Collections.sort(vals);
         toGST(root, vals);
         return root;
-        // O(n^2)
+        // O(nlogn)
     }
     // Method to populate array with all values of tree
     private void treeToArray(TreeNode root, ArrayList<Integer> arr) 

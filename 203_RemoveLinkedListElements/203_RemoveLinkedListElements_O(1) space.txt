@@ -1,0 +1,38 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode removeElements(ListNode head, int val) 
+    {
+        // O(n) time
+        // O(1) space
+        
+        ListNode curr = head;
+        if (curr == null) return head;
+        
+        ListNode prev = new ListNode(-1); // dummy head
+        ListNode res = prev;
+        
+        /* The idea is we only only connect prev to non-matching node curr
+        * curr would skip over any matching node, while prev stays.
+        * only when curr is a non-matching node, then we connect prev to curr and advance both
+        */  
+
+        while (curr != null && prev != null)
+        { 
+            // skip over repeating matching values
+            while (curr != null && curr.val == val) curr = curr.next;
+            
+            // connecting prev to non-matching value
+            prev.next = curr;
+            prev = prev.next;
+            if (curr != null) curr = curr.next;  // only advance curr if curr is not already null
+        }
+        return res.next;
+    }
+}
